@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Budget</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="head">
+    <form id="theForm">
+      <div><input id="name" type="text" name="contact" placeholder="Name" >Name
+      <input id ="email" type="email" name='contact' placeholder="email@email.com" >Email</div>
+      <div><input id='awesomeLevel'type="number" name='contact' min="1" max="10" step="1" placeholder="1-10" />Awesomeness
+      <input id='coolFactor' type="text" name='contact' placeholder="Cool"><span id='enterName'>in one word! </span></div>
+      <div><input id='submitContact' type="submit" name='contact' value="Submit"></div>
+    </form>
+    <div id="balance"></div>
+  </div>
+
+  <table>
+    <tr class="top">
+      <td class="topinfo">Name</td>
+      <td class="topinfo">Email</td>
+      <td class="topinfo">Awesome Level</td>
+      <td class="topinfo">Cool Factors</td>
+      <td class="topinfo">Delete Contact</td>
+    </tr>
+    <tr class="bottom">
+      <td class="bottominfo one"></td>
+      <td class="bottominfo two"></td>
+      <td class="bottominfo three depo"></td>
+      <td class="bottominfo four with"></td>
+      <td class="bottominfo five trashy"><button class='trash'>Delete</button></td>
+    </tr>
+  </table>
+
+
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script src="http://momentjs.com/downloads/moment.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
