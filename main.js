@@ -1,13 +1,33 @@
 'use strict';
 
+var people = []
+var person = {};
+var counter = 1;
 $(document).ready(function() {
   loadFromStorage();
   updatelist();
   $('#submitContact').on('click', putEmIn);
   $('table').on('click', '.trash', removeFromMemory)
+  $('.topinfo').on('click' sorting)
 
-  var people = []
-  var person = {};
+  function loadFromStorage() {
+    if(!localStorage.people){
+      localStorage.people = '[]';
+    }
+    people = JSON.parse(localStorage.people)
+  }
+
+  function updatelist(){
+    people.forEach(function(x){
+      if (x === 'nope'){
+        return;
+      }
+      else {person = x;
+        // console.log('person from updateList', person, 'people from updateList', people)
+        addRow();}
+      })
+    }
+
   function putEmIn(e){
     e.preventDefault();
     makePerson();
@@ -23,46 +43,37 @@ $(document).ready(function() {
     person.cool = $('#coolFactor').val();
     people.push(person)
   }
+
+  function saveToStorage() {
+    localStorage.people = JSON.stringify(people);
+    // console.log(localStorage.people);
+  }
+
   function addRow(){
-    var $myRows = $('.bottom').clone().removeClass('bottom').addClass('newRow');
+    // console.log('person from addRow', person, 'people from addRow', people)
+    // console.log('person from addRow', person)
+    var $myRows = $('.bottom').clone().removeClass('bottom').addClass('newRow').attr('data', counter);
     $('table').append($myRows);
     $('.newRow > .one').append(person.name).removeClass('one');
     $('.newRow > .two').append(person.email).removeClass('two');
     $('.newRow > .three').append(person.awesome).removeClass('three');
     $('.newRow > .four').append(person.cool).removeClass('four');
     $('#theForm')[0].reset();
-  }
-
-  function saveToStorage() {
-    localStorage.people = JSON.stringify(people);
-    console.log(localStorage.people);
-  }
-
-  function loadFromStorage() {
-    if(!localStorage.people){
-      localStorage.people = '[]';
-    }
-    people = JSON.parse(localStorage.people)
+    counter += 1;
   }
 
   function removeFromMemory(){
-    var index = $(this).closest('.newRow').index('.newRow');
-    console.log(index);
+    var index = $(this).closest('.newRow').attr('data');
+    people.splice(index, 1, 'nope');
     $(this).closest('tr').remove();
+    saveToStorage()
   }
 
-  function updatelist(){
-    people.forEach(function(x){
-      person = x;
-      var $myRows = $('.bottom').clone().removeClass('bottom').addClass('newRow');
-      $('table').append($myRows);
-      $('.newRow > .one').append(person.name).removeClass('one');
-      $('.newRow > .two').append(person.email).removeClass('two');
-      $('.newRow > .three').append(person.awesome).removeClass('three');
-      $('.newRow > .four').append(person.cool).removeClass('four');
-    })
-    
-  }
+function sorting(){
+
+}
+
+
 
   //
   //  var counterArray = [];
