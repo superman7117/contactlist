@@ -21,11 +21,11 @@ $(document).ready(function() {
   function updatelist(){
     people.forEach(function(x, i){
       person = x;
-        // console.log('person from updateList', person, 'people from updateList', people)
-        addRow();
-      })
-      saveToStorage();
-    }
+      // console.log('person from updateList', person, 'people from updateList', people)
+      addRow();
+    })
+    saveToStorage();
+  }
 
   function putEmIn(e){
     e.preventDefault();
@@ -35,6 +35,7 @@ $(document).ready(function() {
   }
 
   function makePerson(){
+    person = {};
     person.name = $('#name').val();
     person.email = $('#email').val();
     // Number($('#awesomelevel').val());
@@ -49,8 +50,6 @@ $(document).ready(function() {
   }
 
   function addRow(){
-    // console.log('person from addRow', person, 'people from addRow', people)
-    // console.log('person from addRow', person)
     var $myRows = $('.bottom').clone().removeClass('bottom').addClass('newRow').attr('data', counter);
     $('table').append($myRows);
     $('.newRow > .one').append(person.name).removeClass('one');
@@ -86,16 +85,16 @@ $(document).ready(function() {
     saveToStorage();
   }
 
-function sorting(){
-  var classFind = $(this).attr('class').split(' ')[0];
-  people = _.sortBy(people, classFind);
-  $('.newRow').remove();
-console.log(people);
-people.forEach(function(x){
-  person = x;
-  console.log(person);
-    addRow();
-  })
-  saveToStorage();
-}
+  function sorting(){
+    var classFind = $(this).attr('class').split(' ')[0];
+    people = _.sortBy(people, classFind);
+    $('.newRow').remove();
+    console.log(people);
+    people.forEach(function(x){
+      person = x;
+      console.log(person);
+      addRow();
+    })
+    saveToStorage();
+  }
 })

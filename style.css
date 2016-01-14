@@ -8,8 +8,8 @@ body{
 #theForm{
   width: 60vw;
   display: flex;
-justify-content: center;
-align-items: center;
+  justify-content: center;
+  align-items: center;
   background-color: red;
 }
 table {
