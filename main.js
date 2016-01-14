@@ -8,7 +8,7 @@ $(document).ready(function() {
   updatelist();
   $('#submitContact').on('click', putEmIn);
   $('table').on('click', '.trash', removeFromMemory)
-  // $('.topinfo').on('click' sorting)
+  $('.topinfo').on('click', sorting)
   $('table').on('click', '.edit', edit)
 
   function loadFromStorage() {
@@ -38,7 +38,7 @@ $(document).ready(function() {
     person.name = $('#name').val();
     person.email = $('#email').val();
     // Number($('#awesomelevel').val());
-    person.awesome = 2;
+    person.awesome = $('#awesomeLevel').val();
     person.cool = $('#coolFactor').val();
     people.push(person)
   }
@@ -87,6 +87,15 @@ $(document).ready(function() {
   }
 
 function sorting(){
-
+  var classFind = $(this).attr('class').split(' ')[0];
+  people = _.sortBy(people, classFind);
+  $('.newRow').remove();
+console.log(people);
+people.forEach(function(x){
+  person = x;
+  console.log(person);
+    addRow();
+  })
+  saveToStorage();
 }
 })
