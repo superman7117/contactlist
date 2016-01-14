@@ -8,7 +8,8 @@ $(document).ready(function() {
   updatelist();
   $('#submitContact').on('click', putEmIn);
   $('table').on('click', '.trash', removeFromMemory)
-  $('.topinfo').on('click' sorting)
+  // $('.topinfo').on('click' sorting)
+  $('table').on('click', '.edit', edit)
 
   function loadFromStorage() {
     if(!localStorage.people){
@@ -18,14 +19,12 @@ $(document).ready(function() {
   }
 
   function updatelist(){
-    people.forEach(function(x){
-      if (x === 'nope'){
-        return;
-      }
-      else {person = x;
+    people.forEach(function(x, i){
+      person = x;
         // console.log('person from updateList', person, 'people from updateList', people)
-        addRow();}
+        addRow();
       })
+      saveToStorage();
     }
 
   function putEmIn(e){
@@ -63,79 +62,31 @@ $(document).ready(function() {
   }
 
   function removeFromMemory(){
-    var index = $(this).closest('.newRow').attr('data');
-    people.splice(index, 1, 'nope');
+    var index = $(this).closest('.newRow').attr('data')-1;
+    people.splice(index, 1);
     $(this).closest('tr').remove();
     saveToStorage()
+  }
+
+  function edit(){
+    var thisRow = $(this).closest('tr');
+    var index = $(this).closest('.newRow').attr('data')-1;
+    var promptName = prompt('Enter name');
+    var promptEmail = prompt('Enter email');
+    var promptAwesome = prompt('Enter awesome level');
+    var promptCool = prompt('Enter cool word');
+    thisRow.children('td:first').text(promptName);
+    thisRow.children('td:nth-child(2)').text(promptEmail);
+    thisRow.children('td:nth-child(3)').text(promptAwesome);
+    thisRow.children('td:nth-child(4)').text(promptCool);
+    people[index].name = promptName;
+    people[index].email = promptEmail;
+    people[index].awesome = promptAwesome;
+    people[index].cool = promptCool;
+    saveToStorage();
   }
 
 function sorting(){
 
 }
-
-
-
-  //
-  //  var counterArray = [];
-  // $('body').on("click", "*", function(){})
-  //  function mather(){
-  //    var fiver = counterArray.reduce(function(acc, e){
-  //      return acc = e + acc;
-  //    })
-  //    function commaSeparateNumber(val){
-  //      while (/(\d+)(\d{3})/.test(val.toString())){
-  //        val = val.toString().replace(/(\d+)(\d{3})/, '$1'+','+'$2');
-  //      }
-  //      return val;
-  //    }
-  //    fiver = commaSeparateNumber(fiver);
-  //    $('#balance').children().remove();
-  //    $('#balance').append('<span>$'+fiver+'</span>')
-  //    return fiver;
-  //  }
-  //
-  //
-  //
-  //  function onlyAll(){
-  //    $('.newRow').not('.bottom').show();
-  //    $('.showVDT').remove();
-  //    $('.showVWT').remove();
-  //  }
-  //
-  //  function onlyDeposits(){
-  //    $('.newRow').show();
-  //    $('.newRowW').hide();
-  //    var sum = 0;
-  //    $('.newRow').children('.depo').text().split('$').forEach(function(e){
-  //      sum +=  Number(e);
-  //      return sum;
-  //    });
-  //    $('table').append('<div class="showVDT">Deposit Total $'+sum+'</div>');
-  //    $('.showVWT').remove();
-  //  }
-  //
-  //  function onlyWithdrawals(){
-  //    $('.newRowW').show();
-  //    $('.newRow').hide();
-  //    $('.showVDT').remove();
-  //    var sum = 0;
-  //    $('.newRowW').children('.with').text().split('$').forEach(function(e){
-  //      sum +=  Number(e);
-  //      console.log('sum', sum);
-  //    });
-  //    console.log(sum);
-  //    $('table').append('<div class="showVWT">Withdrawal Total $'+sum+'</div>');
-  //  }
-  //
-  //  function takeOff(){
-  //    var deleteD = $(this).parent().parent('.newRow').children('.depo').text();
-  //    var deD = Number(deleteD.slice(1))*-1;
-  //    var deleteW = $(this).parent().parent('.newRowW').children('.with').text();
-  //    var deW = Number(deleteW.slice(1))*-1;
-  //    counterArray.push(parseFloat(deW));
-  //    counterArray.push(deD);
-  //    mather();
-  //    $(this).parent().parent().remove();
-  //  }
-
 })
