@@ -1,10 +1,12 @@
 'use strict';
 
 $(document).ready(function() {
-  loadFromStorage()
+  loadFromStorage();
+  updatelist();
   $('#submitContact').on('click', putEmIn);
   $('table').on('click', '.trash', removeFromMemory)
 
+  var people = []
   var person = {};
   function putEmIn(e){
     e.preventDefault();
@@ -19,7 +21,7 @@ $(document).ready(function() {
     // Number($('#awesomelevel').val());
     person.awesome = 2;
     person.cool = $('#coolFactor').val();
-
+    people.push(person)
   }
   function addRow(){
     var $myRows = $('.bottom').clone().removeClass('bottom').addClass('newRow');
@@ -28,24 +30,38 @@ $(document).ready(function() {
     $('.newRow > .two').append(person.email).removeClass('two');
     $('.newRow > .three').append(person.awesome).removeClass('three');
     $('.newRow > .four').append(person.cool).removeClass('four');
-    $('.newRow > .five').append().removeClass('five');
     $('#theForm')[0].reset();
   }
 
   function saveToStorage() {
-    localStorage.person = JSON.stringify(person);
-    console.log(localStorage.person);
+    localStorage.people = JSON.stringify(people);
+    console.log(localStorage.people);
   }
 
   function loadFromStorage() {
-    if(!localStorage.person){
-      localStorage.person = '[]';
+    if(!localStorage.people){
+      localStorage.people = '[]';
     }
-    person = JSON.parse(localStorage.person)
+    people = JSON.parse(localStorage.people)
   }
 
   function removeFromMemory(){
-    var index = $(this).closest('tr').remove();
+    var index = $(this).closest('.newRow').index('.newRow');
+    console.log(index);
+    $(this).closest('tr').remove();
+  }
+
+  function updatelist(){
+    people.forEach(function(x){
+      person = x;
+      var $myRows = $('.bottom').clone().removeClass('bottom').addClass('newRow');
+      $('table').append($myRows);
+      $('.newRow > .one').append(person.name).removeClass('one');
+      $('.newRow > .two').append(person.email).removeClass('two');
+      $('.newRow > .three').append(person.awesome).removeClass('three');
+      $('.newRow > .four').append(person.cool).removeClass('four');
+    })
+    
   }
 
   //
